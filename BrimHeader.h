@@ -7,57 +7,40 @@ using namespace std;
 Their will be a value assigned to both the monster and the location together to determine the drop rate*/
 class monster {
 public:
-	double brimstoneDropCalc(double i);
+	double brimstoneDropCalc(double i, bool slayerLvlReq);
 	//double decimalToPercent(double const & decimal);
 	int monsterLvl(int monsterLevel);
-	//bool slayerLvlReq(char tOrF);
-	//int monsterLoc();
-	
+	//bool slayerLvlReq();
 
 private:
 	int numOfLoc;
 };
-/*
-bool monster::slayerLvlReq(char tOrF) {
-	if (tOrF = 't')
-		return true;
-	else
-		return false;
-}
-*/
-double monster::brimstoneDropCalc(double i) {
+
+double monster::brimstoneDropCalc(double i, bool slayerReq) {
 	double resultInDec;
+	double twentyPercent;
 	//char slayerChar;
-
-
-	if (i < 100) {
+	if (i < 100 && slayerReq==false) {
 		resultInDec = 1 / (100 + (pow(100 - i, 2) / 5));
-		return resultInDec;
+		return resultInDec * 100;
 	}
-	else
+	else if (i < 100 && slayerReq == true)
+	{
+		twentyPercent = (1 / (100 + (pow(100 - i, 2) / 5))) * .2;
+		resultInDec = 1 / (100 + (pow(100 - i, 2) / 5)) + twentyPercent;
+		return resultInDec * 100;
+	}
+	else if(i > 100 && slayerReq==false)
 	{
 		resultInDec = 1 / (120 - (i / 5));
+		return resultInDec * 100;
+	}	
+	else
+	{
+		twentyPercent = (1 / (120 - (i / 5))) * .2;
+		resultInDec= (1 / (120 - (i / 5))) + twentyPercent;
+		return resultInDec * 100;
 	}
-	return resultInDec * 100;
-	//this may be useful later
-	/*
-	if (i < 100 && slayerLvlReq(slayerChar)==true){
-		double twentyPer = (1 / (100 + (pow(100 - i, 2) / 5))) * .2;
-		resultInDec = 1 / (100 + (pow(100 - i, 2) / 5)) + twentyPer;
-		return resultInDec;
-	}
-	if (i < 100 && slayerLvlReq(slayerChar)!=true) {
-		resultInDec = 1 / (100 + (pow(100 - i, 2) / 5));
-	}
-	else if (i > 100 && slayerLvlReq(slayerChar) == true) {
-		double twentyPer = (1 / (120 - (i / 5))) * .2;
-		resultInDec = 1 / (120 - (i / 5))+twentyPer;
-	}
-	else {
-		resultInDec = 1 / (120 - (i / 5));
-	}
-	*/
-		
 	}
 
 int monster::monsterLvl(int monsterLevel) {
@@ -66,11 +49,6 @@ int monster::monsterLvl(int monsterLevel) {
 
 	return monstLvl;
 }
-
-//This will probably get moved to main..
-	//Long, but this will list all of the monsters that you can get from konar
-	
-
 #endif
 
 /*int CatacombsOfKourend,slayerTower,strongholdSlayerCave,abyss,lithkrenVault,strongholdOfSec,godWarsDung,fremSlayerDung,jormungandPrison,chasmOfFire,tavDungeon,brimhavenDungeon,mythGuildDung,evilChickenLair,iorwerthDung,meiyerditchLab,isleOfSoulsDung,ogreEnclave,brineRat,krakenCove
